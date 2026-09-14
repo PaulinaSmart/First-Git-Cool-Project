@@ -1,0 +1,1792 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "GeneratedAPI_2026-09-11-1841",
+    "description" : "API for managing Spring PetClinic REST resources inferred from selected models, controller tests, controllers, and exception advice.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "tags" : [ {
+    "name" : "Owners"
+  }, {
+    "name" : "Pets"
+  }, {
+    "name" : "PetTypes"
+  }, {
+    "name" : "Specialties"
+  }, {
+    "name" : "Users"
+  }, {
+    "name" : "Vets"
+  }, {
+    "name" : "Visits"
+  }, {
+    "name" : "Root"
+  } ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "tags" : [ "Root" ],
+        "summary" : "Redirect root requests to the Swagger UI page.",
+        "operationId" : "redirectToSwaggerUi",
+        "responses" : {
+          "302" : {
+            "description" : "Redirect to /swagger-ui/index.html."
+          }
+        }
+      }
+    },
+    "/api/owners" : {
+      "get" : {
+        "tags" : [ "Owners" ],
+        "summary" : "List owners or search by last name.",
+        "operationId" : "listOwners",
+        "parameters" : [ {
+          "name" : "lastName",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Owners found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Owner"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No owners found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "post" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Create an owner.",
+        "operationId" : "createOwner",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/OwnerInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Owner created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created owner.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/owners/{ownerId}" : {
+      "get" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Get an owner by ID.",
+        "operationId" : "getOwnerById",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Owner found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Owner"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Owner not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Update an owner.",
+        "operationId" : "updateOwner",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/OwnerInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Owner updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Owner not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "Owners" ],
+        "summary" : "Delete an owner.",
+        "operationId" : "deleteOwner",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Owner deleted."
+          },
+          "404" : {
+            "description" : "Owner not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/owners/{ownerId}/pets" : {
+      "post" : {
+        "tags" : [ "Owners", "Pets" ],
+        "summary" : "Create a pet for an owner.",
+        "operationId" : "createOwnerPet",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PetInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Pet created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created pet.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Owner not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/owners/{ownerId}/pets/{petId}" : {
+      "get" : {
+        "tags" : [ "Owners", "Pets" ],
+        "summary" : "Get a pet belonging to an owner.",
+        "operationId" : "getOwnerPetById",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Pet found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Owner or pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Owners", "Pets" ],
+        "summary" : "Update a pet belonging to an owner.",
+        "operationId" : "updateOwnerPet",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PetInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Pet updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Owner or pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/owners/{ownerId}/pets/{petId}/visits" : {
+      "post" : {
+        "tags" : [ "Owners", "Pets", "Visits" ],
+        "summary" : "Create a visit for a pet owned by an owner.",
+        "operationId" : "createOwnerPetVisit",
+        "parameters" : [ {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VisitInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Visit created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created visit.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Visit"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Owner or pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/pets" : {
+      "get" : {
+        "tags" : [ "Pets" ],
+        "summary" : "List all pets.",
+        "operationId" : "listPets",
+        "responses" : {
+          "200" : {
+            "description" : "Pets found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No pets found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/pets/{petId}" : {
+      "get" : {
+        "tags" : [ "Pets" ],
+        "summary" : "Get a pet by ID.",
+        "operationId" : "getPetById",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Pet found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Pets" ],
+        "summary" : "Update a pet.",
+        "operationId" : "updatePet",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Pet updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "Pets" ],
+        "summary" : "Delete a pet.",
+        "operationId" : "deletePet",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Pet deleted."
+          },
+          "404" : {
+            "description" : "Pet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/pettypes" : {
+      "get" : {
+        "tags" : [ "PetTypes" ],
+        "summary" : "List all pet types.",
+        "operationId" : "listPetTypes",
+        "responses" : {
+          "200" : {
+            "description" : "Pet types found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PetType"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No pet types found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN", "VET_ADMIN" ]
+      },
+      "post" : {
+        "tags" : [ "PetTypes" ],
+        "summary" : "Create a pet type.",
+        "operationId" : "createPetType",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PetTypeInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Pet type created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created pet type.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PetType"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/pettypes/{petTypeId}" : {
+      "get" : {
+        "tags" : [ "PetTypes" ],
+        "summary" : "Get a pet type by ID.",
+        "operationId" : "getPetTypeById",
+        "parameters" : [ {
+          "name" : "petTypeId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Pet type found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PetType"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Pet type not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN", "VET_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "PetTypes" ],
+        "summary" : "Update a pet type.",
+        "operationId" : "updatePetType",
+        "parameters" : [ {
+          "name" : "petTypeId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PetType"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Pet type updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Pet type not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "PetTypes" ],
+        "summary" : "Delete a pet type.",
+        "operationId" : "deletePetType",
+        "parameters" : [ {
+          "name" : "petTypeId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Pet type deleted."
+          },
+          "404" : {
+            "description" : "Pet type not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/specialties" : {
+      "get" : {
+        "tags" : [ "Specialties" ],
+        "summary" : "List all specialties.",
+        "operationId" : "listSpecialties",
+        "responses" : {
+          "200" : {
+            "description" : "Specialties found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Specialty"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No specialties found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "post" : {
+        "tags" : [ "Specialties" ],
+        "summary" : "Create a specialty.",
+        "operationId" : "createSpecialty",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Specialty"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Specialty created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created specialty.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Specialty"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/specialties/{specialtyId}" : {
+      "get" : {
+        "tags" : [ "Specialties" ],
+        "summary" : "Get a specialty by ID.",
+        "operationId" : "getSpecialtyById",
+        "parameters" : [ {
+          "name" : "specialtyId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Specialty found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Specialty"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Specialty not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Specialties" ],
+        "summary" : "Update a specialty.",
+        "operationId" : "updateSpecialty",
+        "parameters" : [ {
+          "name" : "specialtyId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Specialty"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Specialty updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Specialty not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "Specialties" ],
+        "summary" : "Delete a specialty.",
+        "operationId" : "deleteSpecialty",
+        "parameters" : [ {
+          "name" : "specialtyId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Specialty deleted."
+          },
+          "404" : {
+            "description" : "Specialty not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/users" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Create a user.",
+        "operationId" : "createUser",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserCreate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "User created.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "ADMIN" ]
+      }
+    },
+    "/api/vets" : {
+      "get" : {
+        "tags" : [ "Vets" ],
+        "summary" : "List all veterinarians.",
+        "operationId" : "listVets",
+        "responses" : {
+          "200" : {
+            "description" : "Vets found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Vet"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No vets found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "post" : {
+        "tags" : [ "Vets" ],
+        "summary" : "Create a veterinarian.",
+        "operationId" : "createVet",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Vet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Vet created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created veterinarian.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Vet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/vets/{vetId}" : {
+      "get" : {
+        "tags" : [ "Vets" ],
+        "summary" : "Get a veterinarian by ID.",
+        "operationId" : "getVetById",
+        "parameters" : [ {
+          "name" : "vetId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Vet found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Vet"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Vet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Vets" ],
+        "summary" : "Update a veterinarian.",
+        "operationId" : "updateVet",
+        "parameters" : [ {
+          "name" : "vetId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Vet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Vet updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Vet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "Vets" ],
+        "summary" : "Delete a veterinarian.",
+        "operationId" : "deleteVet",
+        "parameters" : [ {
+          "name" : "vetId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Vet deleted."
+          },
+          "404" : {
+            "description" : "Vet not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "VET_ADMIN" ]
+      }
+    },
+    "/api/visits" : {
+      "get" : {
+        "tags" : [ "Visits" ],
+        "summary" : "List all visits.",
+        "operationId" : "listVisits",
+        "responses" : {
+          "200" : {
+            "description" : "Visits found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Visit"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "No visits found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "post" : {
+        "tags" : [ "Visits" ],
+        "summary" : "Create a visit.",
+        "operationId" : "createVisit",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Visit"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Visit created.",
+            "headers" : {
+              "Location" : {
+                "description" : "URI of the created visit.",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "format" : "uri"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Visit"
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    },
+    "/api/visits/{visitId}" : {
+      "get" : {
+        "tags" : [ "Visits" ],
+        "summary" : "Get a visit by ID.",
+        "operationId" : "getVisitById",
+        "parameters" : [ {
+          "name" : "visitId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Visit found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Visit"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Visit not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "put" : {
+        "tags" : [ "Visits" ],
+        "summary" : "Update a visit.",
+        "operationId" : "updateVisit",
+        "parameters" : [ {
+          "name" : "visitId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VisitInput"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Visit updated."
+          },
+          "400" : {
+            "$ref" : "#/components/responses/BadRequestProblem"
+          },
+          "404" : {
+            "description" : "Visit not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      },
+      "delete" : {
+        "tags" : [ "Visits" ],
+        "summary" : "Delete a visit.",
+        "operationId" : "deleteVisit",
+        "parameters" : [ {
+          "name" : "visitId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Visit deleted."
+          },
+          "404" : {
+            "description" : "Visit not found."
+          },
+          "500" : {
+            "$ref" : "#/components/responses/InternalServerError"
+          }
+        },
+        "x-required-roles" : [ "OWNER_ADMIN" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ProblemDetail" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "integer"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "instance" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "BindingError" : {
+        "type" : "object",
+        "properties" : {
+          "objectName" : {
+            "type" : "string"
+          },
+          "fieldName" : {
+            "type" : "string"
+          },
+          "fieldValue" : {
+            "type" : "string"
+          },
+          "errorMessage" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BindingErrorsResponse" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/BindingError"
+        }
+      },
+      "Owner" : {
+        "required" : [ "address", "city", "firstName", "lastName", "telephone" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "pattern" : "^[0-9]{10}$",
+            "type" : "string"
+          },
+          "pets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PetSummary"
+            }
+          }
+        }
+      },
+      "OwnerInput" : {
+        "required" : [ "address", "city", "firstName", "lastName", "telephone" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "Optional in update payloads; if present and different from the path ID, validation may fail."
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "pattern" : "^[0-9]{10}$",
+            "type" : "string"
+          }
+        }
+      },
+      "Pet" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/PetType"
+          },
+          "ownerId" : {
+            "type" : "integer"
+          },
+          "visits" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VisitSummary"
+            }
+          }
+        }
+      },
+      "PetInput" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/PetType"
+          }
+        }
+      },
+      "PetSummary" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/PetType"
+          }
+        }
+      },
+      "PetType" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PetTypeInput" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Specialty" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SpecialtyInput" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Vet" : {
+        "required" : [ "firstName", "lastName" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "specialties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Specialty"
+            }
+          }
+        }
+      },
+      "VetInput" : {
+        "required" : [ "firstName", "lastName" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "specialties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Specialty"
+            }
+          }
+        }
+      },
+      "Visit" : {
+        "required" : [ "description" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "petId" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "VisitInput" : {
+        "required" : [ "description" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "petId" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "VisitSummary" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string"
+          },
+          "enabled" : {
+            "type" : "boolean"
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "UserCreate" : {
+        "required" : [ "password", "username" ],
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string",
+            "writeOnly" : true
+          },
+          "enabled" : {
+            "type" : "boolean"
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "Role" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "BadRequestProblem" : {
+        "description" : "Request validation failed.",
+        "content" : {
+          "application/problem+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ProblemDetail"
+            }
+          },
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      },
+      "InternalServerError" : {
+        "description" : "Unexpected server error.",
+        "content" : {
+          "application/problem+json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ProblemDetail"
+            }
+          },
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "OwnerId" : {
+        "name" : "ownerId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "PetId" : {
+        "name" : "petId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "PetTypeId" : {
+        "name" : "petTypeId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "SpecialtyId" : {
+        "name" : "specialtyId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "VetId" : {
+        "name" : "vetId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "VisitId" : {
+        "name" : "visitId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      }
+    }
+  }
+}
